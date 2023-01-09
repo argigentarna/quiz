@@ -1,3 +1,8 @@
+// ignore_for_file: avoid_function_literals_in_foreach_calls, no_leading_underscores_for_local_identifiers
+
+import 'dart:convert';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import "package:collection/collection.dart";
@@ -29,12 +34,27 @@ class QuestionViewModel with ChangeNotifier {
     return _listQuestions != null ? _listQuestions!.length : 0;
   }
 
-  Future<void> fetchQuestionsDummy() async {
-    // List<QuestionModel> list = QuestionModel.getQuestionDummy();
-    // if (kDebugMode) {
-    //   print("Check List");
-    //   print(list.toString());
-    // }
-    // listQuestions = list;
+  Future<void> fetchQuestionsFromFirestore() async {
+    // NOTE : Get data from firestore
+    List<QuestionModel> _question = [];
+
+    await FirebaseFirestore.instance
+        .collection('question')
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        _question.add(
+          QuestionModel(
+            quest: doc['quest'],
+            image: doc['image'] ?? "",
+            answers: doc['answers'].cast<String>()?.toList(),
+            topic: doc['topic'],
+            trueAnswer: doc['trueAnswer'],
+          ),
+        );
+      });
+    });
+
+    listQuestions = _question;
   }
 }

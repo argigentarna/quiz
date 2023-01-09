@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quiz_app/view/screens/home_page.dart';
@@ -7,7 +9,10 @@ import 'package:quiz_app/view/screens/topic_page.dart';
 import 'package:quiz_app/view_model/question_view_model.dart';
 import 'package:quiz_app/view_model/quiz_view_model.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
   runApp(
     MultiProvider(
       providers: [

@@ -124,15 +124,29 @@ class QuizPage extends StatelessWidget {
                 color: AppColors.kBlackColor,
               ),
             ),
-            provider.listQuestions![provider.currentQuestionIndex].image == null
+            provider.listQuestions![provider.currentQuestionIndex].image ==
+                        null ||
+                    provider.listQuestions![provider.currentQuestionIndex].image
+                            .toString()
+                            .trim() ==
+                        ""
                 ? const SizedBox()
-                : Image.asset(
-                    provider
-                        .listQuestions![provider.currentQuestionIndex].image!,
-                    width: double.infinity,
-                    height: 300,
-                    fit: BoxFit.cover,
-                  ),
+                : provider.listQuestions![provider.currentQuestionIndex].image!
+                        .contains("firebasestorage")
+                    ? Image.network(
+                        provider.listQuestions![provider.currentQuestionIndex]
+                            .image!,
+                        width: double.infinity,
+                        height: 300,
+                        fit: BoxFit.cover,
+                      )
+                    : Image.asset(
+                        provider.listQuestions![provider.currentQuestionIndex]
+                            .image!,
+                        width: double.infinity,
+                        height: 300,
+                        fit: BoxFit.cover,
+                      ),
           ],
         ),
       ),

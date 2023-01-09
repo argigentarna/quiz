@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_this, unnecessary_new, prefer_collection_literals
+
 import '../res/shared/const.dart';
 
 class QuestionModel {
@@ -14,6 +16,24 @@ class QuestionModel {
     this.topic,
     this.trueAnswer,
   });
+
+  QuestionModel.fromJson(Map<String, dynamic> json) {
+    quest = json['quest'];
+    image = json['image'];
+    answers = json['answers'].cast<String>();
+    topic = json['topic'];
+    trueAnswer = json['trueAnswer'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['quest'] = this.quest;
+    data['image'] = this.image;
+    data['answers'] = this.answers;
+    data['topic'] = this.topic;
+    data['trueAnswer'] = this.trueAnswer;
+    return data;
+  }
 
   static List<QuestionModel> getQuestionDummy() => [
         QuestionModel(

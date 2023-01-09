@@ -32,7 +32,7 @@ class _HomePageState extends State<HomePage> {
     );
 
     if (!_init) {
-      provider.fetchQuestionsDummy();
+      provider.fetchQuestionsFromFirestore();
       setState(() {
         _init = true;
       });
